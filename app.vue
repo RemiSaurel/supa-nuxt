@@ -64,8 +64,11 @@ function submitCurrentAnswer(answer) {
   });
   if (currentQuestionIndex.value < questions.value.length - 1) {
     currentQuestionIndex.value++;
+    // Store current question index
+    localStorage.setItem("current_question_index", currentQuestionIndex.value);
   } else {
     submitAnswers();
+    localStorage.removeItem("current_question_index");
   }
 }
 
@@ -78,6 +81,8 @@ const timeFormatted = computed(() => {
 onMounted(() => {
   getQuestions();
   startTimer();
+  const storedIndex = localStorage.getItem("current_question_index") || 0;
+  currentQuestionIndex.value = parseInt(storedIndex);
 });
 </script>
 
